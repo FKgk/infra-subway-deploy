@@ -33,8 +33,11 @@ function build() {
 function stop() {
 	echo -e ">> stop current server"
 	FILE_NAME=$(find ./build/* -name "*jar" -type f -printf "%f")
-	PID=$(pgrep -f ${FILE_NAME})
-	kill -2 $PID
+	if [[ -n "$(pgrep -f ${FILE_NAME})" ]]
+    then
+    	kill -2 $(pgrep -f ${FILE_NAME})
+    fi
+
 }
 function run() {
 	echo -e ">> deploy new server"
